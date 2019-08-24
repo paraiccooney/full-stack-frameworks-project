@@ -1,0 +1,40 @@
+.navbar-subheading {
+    font-size: 8px;
+}
+
+.article {
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 150px;
+    height: 150px;
+    float: right;
+}
+
+.article-row{
+    max-height: 45vh;
+    overflow:hidden;
+    padding: 60px 40px 20px 40px;
+    box-shadow:10px 10px 30px grey;
+}
+
+#navbarColor01 {
+    padding-left:20px;
+}
+
+.btn-outline-secondary {
+    padding: 6px 16px 6px 16px;
+}
+
+footer {
+    padding-top: 60px;
+    text-align: center;
+}
+
+/* Media Queries */
+.article-summary {
+    display:none;
+}
+@media screen and (min-width:768px) {.article-summary {
+display:block!important;
+}}
