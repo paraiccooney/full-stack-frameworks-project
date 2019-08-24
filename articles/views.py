@@ -3,7 +3,7 @@ from .models import Article
 
 # Create your views here.
 def all_articles(request):
-    articles = Article.objects.all()
+    articles = Article.objects.all().order_by('-published_date')
     return render(request, "index.html", {"articles": articles})
     
 def full_article(request, pk):

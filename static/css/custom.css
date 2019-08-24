@@ -2,13 +2,19 @@
     font-size: 8px;
 }
 
-.article {
+.article-thumbnail, .article-picture {
     background-size: contain;
     background-position: center center;
     background-repeat: no-repeat;
-    width: 150px;
+}
+.article-thumbnail {
+   width: 150px;
     height: 150px;
-    float: right;
+    float: right; 
+}
+.article-picture {
+    width:300px;
+    height:300px;
 }
 
 .article-row{
@@ -43,13 +49,22 @@
     text-decoration: underline;
 }
 
-
 footer {
     padding-top: 60px;
     text-align: center;
 }
 
+/* authentication styling */
+form {
+    width: 50%;
+}
+
+.authentication-container {
+    margin-top:20px;
+}
+
 /* Media Queries */
+/* hide/reveal article summary based on screen size */
 .article-summary {
     display:none;
 }

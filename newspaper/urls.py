@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from articles.views import all_articles
+from accounts import urls as accounts_urls
 from django.views.generic import RedirectView
 from django.views import static
 from .settings import MEDIA_ROOT
@@ -23,7 +24,8 @@ from .settings import MEDIA_ROOT
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', RedirectView.as_view(url='article/')),
+    url(r'^$', RedirectView.as_view(url='articles/')),
     url(r'^media/(?P<path>.*)$', static.serve, {'document_root': MEDIA_ROOT}),
-    url(r'^article/', include('articles.urls')),
+    url(r'^articles/', include('articles.urls')),
+    url(r'^accounts/', include(accounts_urls)),
 ]

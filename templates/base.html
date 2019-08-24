@@ -24,7 +24,7 @@
   <div class="collapse navbar-collapse" id="navbarColor01">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Donate</a>
@@ -33,17 +33,17 @@
       <!-- different navbar rendering depending on logged in status -->
       {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Profile</a>
+                            <a class="nav-link" href="{% url 'profile' %}">Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Log out</a>
+                            <a class="nav-link" href="{% url 'logout' %}">Log out</a>
                         </li>
                     {%  else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Register</a>
+                            <a class="nav-link" href="{% url 'registration' %}">Register</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Log in</a>
+                            <a class="nav-link" href="{% url 'login' %}">Log in</a>
                         </li>
       {% endif %}
       
