@@ -2,6 +2,8 @@
 
 {% block content %}
 
+<!-- if there are articles (search results may not return any) -->
+{% if  articles %}
 {% for article in articles %}
 <div class="row article-row">
     <div class="col-sm-12 col-md-6">
@@ -35,5 +37,13 @@
 
 
 {% endfor %}
+
+<!-- if there are no search results -->
+{% else %}
+<div class="no-results-row container">
+    <h5>No results</h5>
+</div>
+{% endif %}
+
 
 {% endblock %}

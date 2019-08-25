@@ -67,6 +67,13 @@ form {
     border:1px solid black;
 }
 
+
+.no-results-row {
+    min-height: 70vh;
+    text-align: center;
+    padding-top:80px;
+}
+
 /* Media Queries */
 /* hide/reveal article summary based on screen size */
 .article-summary {
