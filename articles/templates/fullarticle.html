@@ -20,6 +20,18 @@
                     <p>{{ article.content|linebreaks }}</p>
                 </div>
             </div>
+            <hr>
+            <div class="row">
+
+                <form method="POST" enctype="multipart/form-data" class="comment_form">
+                {% csrf_token %}
+                    <input class="form-control comment-input" type="text" name="comment" placeholder="Comment">
+                    <input class="hidden-input" type="text" name="artcile_id" value={{ article.id }}>
+                    <button type="submit" class="btn btn-primary comment_button">Save</button>
+                </form>
+    
+    
+            </div>
         </div>
     </div>
 </div>
