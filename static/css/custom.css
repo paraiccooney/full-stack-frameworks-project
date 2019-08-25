@@ -63,6 +63,10 @@ form {
     margin-top:20px;
 }
 
+.form-control {
+    border:1px solid black;
+}
+
 /* Media Queries */
 /* hide/reveal article summary based on screen size */
 .article-summary {
