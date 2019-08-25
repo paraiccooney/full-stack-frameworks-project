@@ -7,7 +7,17 @@
     <div class="col-sm-12 col-md-6">
         <div class="row">
         <div class="col-5">
+            <!-- longer headline will render smaller to avoid overflow -->
+            {% if  article.headline|length >= 90 %}
+            <a href="{% url 'full_article' article.id %}"><h7 class="headline">{{ article.headline }}</h7></a>
+            {% elif  article.headline|length >= 70 %}
+            <a href="{% url 'full_article' article.id %}"><h6 class="headline">{{ article.headline }}</h6></a>
+            {% elif  article.headline|length >= 50 %}
             <a href="{% url 'full_article' article.id %}"><h5 class="headline">{{ article.headline }}</h5></a>
+            {% else %}
+            <a href="{% url 'full_article' article.id %}"><h4 class="headline">{{ article.headline }}</h4></a>
+            {% endif %}
+            
                 <p>{{ article.author }}</p>
                 <p><i class="fas fa-eye"></i> {{article.views}}</p>
         </div>

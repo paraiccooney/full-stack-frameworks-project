@@ -20,6 +20,7 @@ from accounts import urls as accounts_urls
 from django.views.generic import RedirectView
 from django.views import static
 from .settings import MEDIA_ROOT
+from search import urls as urls_search
 
 
 urlpatterns = [
@@ -28,4 +29,5 @@ urlpatterns = [
     url(r'^media/(?P<path>.*)$', static.serve, {'document_root': MEDIA_ROOT}),
     url(r'^articles/', include('articles.urls')),
     url(r'^accounts/', include(accounts_urls)),
+    url(r'^search/', include(urls_search)),
 ]
