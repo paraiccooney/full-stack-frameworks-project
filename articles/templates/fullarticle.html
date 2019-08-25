@@ -16,8 +16,8 @@
                     <p><span class="boldtext">Views:</span> {{article.views}}</p>
                     <hr>
                 </div>
-                <div>
-                    <p class="full-article">{{ article.content }}</p>
+                <div class="full-article">
+                    <p>{{ article.content|linebreaks }}</p>
                 </div>
             </div>
         </div>
