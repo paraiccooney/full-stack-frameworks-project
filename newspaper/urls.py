@@ -21,6 +21,7 @@ from django.views.generic import RedirectView
 from django.views import static
 from .settings import MEDIA_ROOT
 from search import urls as urls_search
+from donate import urls as urls_donate
 
 
 urlpatterns = [
@@ -30,4 +31,5 @@ urlpatterns = [
     url(r'^articles/', include('articles.urls')),
     url(r'^accounts/', include(accounts_urls)),
     url(r'^search/', include(urls_search)),
+    url(r'^donate/', include(urls_donate)),
 ]

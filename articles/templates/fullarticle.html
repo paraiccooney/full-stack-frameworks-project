@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+{% load bootstrap_tags %}
 {% block content %}
+
 <div class="container">
     <div class="row">
         <div class="col-12 full-article-container">
@@ -23,15 +25,19 @@
             <hr>
             <div class="row">
 
-                <form method="POST" enctype="multipart/form-data" class="comment_form">
-                {% csrf_token %}
-                    <input class="form-control comment-input" type="text" name="comment" placeholder="Comment">
-                    <input class="hidden-input" type="text" name="artcile_id" value={{ article.id }}>
-                    <button type="submit" class="btn btn-primary comment_button">Save</button>
+               <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ comment_form | as_bootstrap }}
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </form>
-    
-    
+   
             </div>
+            
+            {% for comment in comments %}
+            <div>{{ comment.comment }}</div>
+            
+            {% endfor %}
+            
         </div>
     </div>
 </div>

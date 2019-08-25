@@ -74,6 +74,32 @@ form {
     padding-top:80px;
 }
 
+/* Comment section styling */
+.hidden-input {
+    display:none;
+}
+
+.comment-input {
+    height:10vh;
+}
+
+.comment_form {
+    width:100%;
+}
+
+.comment_button {
+    float:right;
+}
+
+
+/* payment styling */
+.payment-form {
+    width:100%;
+}
+.donate-button {
+    float:right;
+}
+
 /* Media Queries */
 /* hide/reveal article summary based on screen size */
 .article-summary {
