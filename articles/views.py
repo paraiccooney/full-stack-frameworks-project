@@ -11,22 +11,27 @@ def all_articles(request):
     
 def full_article(request, pk):
     """
-    Create a view that returns a single
-    Article object based on the article ID (pk) and
-    render it to the 'full_article.html' template.
-    Or return a 404 error if the post is
-    not found
+    render an individual article with comment section
     """
     article = get_object_or_404(Article, pk=pk) if pk else None
-    user = User.objects.get(email=request.user.email)
+    comments = Comment.objects.filter(article_key=pk)
     
+    """if the user is logged in get their details, if not return an empty string.
+    This solves a bug when rendering create-comment functionality based on logged in status"""
+    if request.user.is_authenticated:
+        user = User.objects.get(email=request.user.email)
+    else:
+        user = ''
+    
+    # comment form submission
     if request.method == "POST":
         form = CommentForm(request.POST, request.FILES, instance=article)
         if form.is_valid():
             comment_form= CommentForm(request.POST)
             comment_form.save()
-            return redirect(all_articles)
+            return render(request, "fullarticle.html", {'article': article, 'comment_form': comment_form, 'comments': comments})
     
+    # "normal" page request (view the article)
     else:
         article = get_object_or_404(Article, pk=pk)
         article.views += 1
@@ -34,8 +39,6 @@ def full_article(request, pk):
         
         comment_form = CommentForm(initial={'article_key': pk, 'comment_author': user })
         
-        comments = Comment.objects.filter(article_key=pk)
-    
         return render(request, "fullarticle.html", {'article': article, 'comment_form': comment_form, 'comments': comments})
     
     

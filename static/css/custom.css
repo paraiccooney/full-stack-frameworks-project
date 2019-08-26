@@ -54,7 +54,7 @@ footer {
     text-align: center;
 }
 
-/* authentication styling */
+/* AUTHENTICATION STYLING */
 form {
     width: 50%;
 }
@@ -74,7 +74,7 @@ form {
     padding-top:80px;
 }
 
-/* Comment section styling */
+/* COMMENT SECTION STYLING */
 .hidden-input {
     display:none;
 }
@@ -91,8 +91,15 @@ form {
     float:right;
 }
 
+#div_id_article_key, #div_id_comment_author {
+    display:none!important;
+}
 
-/* payment styling */
+.log-in-container {
+    text-align:center;
+}
+
+/* PAYMENT STYLING */
 .payment-form {
     width:100%;
 }
@@ -100,7 +107,7 @@ form {
     float:right;
 }
 
-/* Media Queries */
+/* MEDIA QUERIES */
 /* hide/reveal article summary based on screen size */
 .article-summary {
     display:none;
