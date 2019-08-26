@@ -18,7 +18,7 @@
 }
 
 .article-row{
-    max-height: 45vh;
+    max-height: 80vh;
     overflow:hidden;
     padding: 60px 40px 20px 40px;
     box-shadow:10px 10px 30px grey;
@@ -48,6 +48,7 @@
 .headline:hover {
     text-decoration: underline;
 }
+
 
 footer {
     padding-top: 60px;
