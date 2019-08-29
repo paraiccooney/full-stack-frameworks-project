@@ -1,4 +1,16 @@
 {% extends 'base.html' %}
+{% load bootstrap_tags %}
 {% block content %}
+<div class="container">
+<br>
+<div class="row">
+
+                   <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ new_article | as_bootstrap }}
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    </form>
+                </div>
+</div>
 
 {% endblock %}
