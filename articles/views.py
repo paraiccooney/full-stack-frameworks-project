@@ -2,12 +2,29 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Article
 from .models import Comment
 from .forms import CommentForm
-from django.contrib.auth.models import User
+from django.conf import settings
+from django.contrib.auth.models import User, Group
+from django import template
+
+
+"""register = template.Library() 
+
+@register.filter(name='has_group') 
+def has_group(user, group_name):
+    return user.groups.filter(name=group_name).exists() """
+
+"""def is_member(user):"""
+journalist=True
+"""if user.groups.filter(name='journalists').exists():
+        journalist= True
+    else:
+        journalist= False"""
 
 # Create your views here.
 def all_articles(request):
     articles = Article.objects.all().order_by('-published_date')
-    return render(request, "index.html", {"articles": articles})
+    media_path = settings.MEDIAFILES_LOCATION
+    return render(request, "index.html", {"articles": articles, "media_path": media_path})
     
 def full_article(request, pk):
     """
@@ -22,7 +39,7 @@ def full_article(request, pk):
         user = User.objects.get(email=request.user.email)
     else:
         user = ''
-    
+        
     # comment form submission
     if request.method == "POST":
         form = CommentForm(request.POST, request.FILES, instance=article)

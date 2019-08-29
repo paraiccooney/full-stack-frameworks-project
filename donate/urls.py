@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from .views import checkout
+from .views import donate
 
 urlpatterns = [
-    url(r'^$', checkout, name='donate'),
+    url(r'^$', donate, name='donate'),
 ]

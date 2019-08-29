@@ -35,6 +35,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'logout' %}">Log out</a>
                         </li>
+                        {% if journalist %} 
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Write</a>
+                        </li>
+                        {% endif %}
                     {%  else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'registration' %}">Register</a>
@@ -53,6 +59,14 @@
     </form>
   </div>
 </nav>
+<!-- message rendering -->
+{% if messages %}
+        {% for message in messages %} 
+        <div class="alert alert-dismissible alert-primary">
+            {{ message }} 
+        </div>
+        {% endfor %}
+{% endif %}
 
 {% block content %} {% endblock %}
 
