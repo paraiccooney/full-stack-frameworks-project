@@ -77,7 +77,7 @@ def write(request, pk=None):
         if request.method == "POST":
             form = ArticleForm(request.POST, request.FILES, instance=article)
             if form.is_valid():
-                article_form= ArticleForm(request.POST)
+                article_form = form
                 article_form.save()
                 return(redirect(reverse('index')))
             

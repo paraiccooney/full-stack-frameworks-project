@@ -12,4 +12,4 @@ class ArticleForm(forms.ModelForm):
     
     class Meta:
         model = Article
-        fields = ('headline', 'author', 'content', 'published_date', 'views', 'tag', 'image')
+        fields = ('headline', 'author', 'content', 'tag', 'image')
