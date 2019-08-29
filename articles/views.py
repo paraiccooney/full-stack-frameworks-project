@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from .models import Article
 from .models import Comment
 from .forms import CommentForm
@@ -7,31 +7,37 @@ from django.contrib.auth.models import User, Group
 from django import template
 
 
-"""register = template.Library() 
+# Create your views here.
 
-@register.filter(name='has_group') 
-def has_group(user, group_name):
-    return user.groups.filter(name=group_name).exists() """
-
-"""def is_member(user):"""
-journalist=True
-"""if user.groups.filter(name='journalists').exists():
+# HOME PAGE WITH ALL ARTICLES
+def all_articles(request):
+    
+    # check to see if user is a journalist
+    user = request.user
+    if user.groups.filter(name='journalists').exists():
         journalist= True
     else:
-        journalist= False"""
-
-# Create your views here.
-def all_articles(request):
+        journalist= False
+    
     articles = Article.objects.all().order_by('-published_date')
     media_path = settings.MEDIAFILES_LOCATION
-    return render(request, "index.html", {"articles": articles, "media_path": media_path})
-    
+    return render(request, "index.html", {"articles": articles, "media_path": media_path, "journalist": journalist})
+ 
+
+# INDIVIDUAL ARTICLE VIEW
 def full_article(request, pk):
     """
     render an individual article with comment section
     """
     article = get_object_or_404(Article, pk=pk) if pk else None
     comments = Comment.objects.filter(article_key=pk)
+    
+    # check to see if user is a journalist
+    user = request.user
+    if user.groups.filter(name='journalists').exists():
+        journalist= True
+    else:
+        journalist= False
     
     """if the user is logged in get their details, if not return an empty string.
     This solves a bug when rendering create-comment functionality based on logged in status"""
@@ -46,7 +52,7 @@ def full_article(request, pk):
         if form.is_valid():
             comment_form= CommentForm(request.POST)
             comment_form.save()
-            return render(request, "fullarticle.html", {'article': article, 'comment_form': comment_form, 'comments': comments})
+            return render(request, "fullarticle.html", {'article': article, 'comment_form': comment_form, 'comments': comments, "journalist": journalist})
     
     # "normal" page request (view the article)
     else:
@@ -56,9 +62,22 @@ def full_article(request, pk):
         
         comment_form = CommentForm(initial={'article_key': pk, 'comment_author': user })
         
-        return render(request, "fullarticle.html", {'article': article, 'comment_form': comment_form, 'comments': comments})
+        return render(request, "fullarticle.html", {'article': article, 'comment_form': comment_form, 'comments': comments, "journalist": journalist})
     
     
-    
-    
- 
+# VIEW TO WRITE AN ARTICLE
+def write(request):
+
+    """The if statement below ensures that if the user (or someone who is not logged in) has typed in the correct URL but they are not in the journalists user 
+    group they will be redirected.  This is used to stop people breaking the intention of the code."""
+    user = request.user
+    if user.groups.filter(name='journalists').exists():
+        journalist= True
+        
+        return render(request, "write.html", {"journalist": journalist})
+        
+    else:
+        return(redirect(reverse('index')))
+        
+        
+     

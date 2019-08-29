@@ -14,6 +14,14 @@ stripe.api_key = settings.STRIPE_SECRET
 # login_required used to ensure customer is logged in
 @login_required()
 def donate(request):
+    
+    # check to see if user is a journalist
+    user = request.user
+    if user.groups.filter(name='journalists').exists():
+        journalist= True
+    else:
+        journalist= False
+    
     if request.method == "POST":
         order_form = OrderForm(request.POST)
         payment_form = MakePaymentForm(request.POST)
@@ -53,4 +61,4 @@ def donate(request):
         payment_form = MakePaymentForm()
         order_form = OrderForm()
     
-    return render(request, "donate.html", {"order_form": order_form, "payment_form": payment_form, "publishable": settings.STRIPE_PUBLISHABLE})
+    return render(request, "donate.html", {"order_form": order_form, "payment_form": payment_form, "publishable": settings.STRIPE_PUBLISHABLE, "journalist": journalist})

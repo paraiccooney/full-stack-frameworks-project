@@ -18,6 +18,13 @@ def logout(request):
 
 
 def login(request):
+    # check to see if user is a journalist
+    user = request.user
+    if user.groups.filter(name='journalists').exists():
+        journalist= True
+    else:
+        journalist= False
+        
     """Return a login page"""
     if request.user.is_authenticated:
         return redirect(reverse('index'))
@@ -36,7 +43,7 @@ def login(request):
                 login_form.add_error(None, "Your username or password is incorrect")
     else:
         login_form = UserLoginForm()
-    return render(request, 'login.html', {'login_form': login_form})
+    return render(request, 'login.html', {'login_form': login_form, 'journalist': journalist})
 
 
 def registration(request):

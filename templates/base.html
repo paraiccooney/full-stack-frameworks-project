@@ -32,15 +32,16 @@
       
       <!-- different navbar rendering depending on logged in status -->
       {% if user.is_authenticated %}
+                  <!-- if user is a journalist they will have the capacity to write -->
+                        {% if journalist %} 
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'write' %}">Write</a>
+                            </li>
+                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'logout' %}">Log out</a>
                         </li>
-                        {% if journalist %} 
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'logout' %}">Write</a>
-                        </li>
-                        {% endif %}
                     {%  else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'registration' %}">Register</a>
