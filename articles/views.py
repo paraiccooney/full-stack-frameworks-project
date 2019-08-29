@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from .models import Article
 from .models import Comment
-from .forms import CommentForm
+from .forms import CommentForm, ArticleForm
 from django.conf import settings
 from django.contrib.auth.models import User, Group
 from django import template
@@ -66,15 +66,26 @@ def full_article(request, pk):
     
     
 # VIEW TO WRITE AN ARTICLE
-def write(request):
+def write(request, pk=None):
 
     """The if statement below ensures that if the user (or someone who is not logged in) has typed in the correct URL but they are not in the journalists user 
     group they will be redirected.  This is used to stop people breaking the intention of the code."""
     user = request.user
     if user.groups.filter(name='journalists').exists():
         journalist= True
+        article = get_object_or_404(Article, pk=pk) if pk else None
+        if request.method == "POST":
+            form = ArticleForm(request.POST, request.FILES, instance=article)
+            if form.is_valid():
+                article_form= ArticleForm(request.POST)
+                article_form.save()
+                return(redirect(reverse('index')))
+            
+            
         
-        return render(request, "write.html", {"journalist": journalist})
+        else:
+            new_article = ArticleForm()
+            return render(request, "write.html", {"journalist": journalist, "new_article": new_article})
         
     else:
         return(redirect(reverse('index')))
