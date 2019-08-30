@@ -84,6 +84,83 @@ Crossfilters & D3 could be utilised to construct this dashboard.
 At present articles are displayed based on their published date.  As the database grows I believe it would be benefical to add functionality to allow users to view articles
 based on different metrics such as 'most-commented' or 'most-viewed' articles of the past day or week.
 
+## Data Structure
+The back-end of this application is built using Postgres (a resource which can be added to Heroku where this app is deployed).  The app uses a relational database type (the comment
+section references it's secondary key against the articles primary key).
+Hosting of static files is achieved using S3/IAM (AWS Buckets).
+
+## Testing
+TO BE COMPLETED
+
+## Deployment
+This application is hosted & deployed using Herouku & is located at ( https://paraic-fullstack-project.herokuapp.com/ ). 
+The application is currently calibrated to update automatically with new commits as the master origin has been updated to Heroku.
+
+### Obtain the source code
+In order to run this application locally you can clone this repository directly into your personal editor using the following command;
+git clone (https://git.heroku.com/paraic-fullstack-project.git)
+In order for this application to be deployed correctly all html pages which are to be rendered also must be kept
+in a folder named 'templates' but can be located anywhere within the directory.
+### Install all requirements & create a Superuser (admin)
+To successful run this application all packages in the requirements.txt file must be downloaded.  Once this has been completed a superuser must be created in order to gain access
+to the built in Django admin panel.  To do this run the following command;
+'python3 manage.py createsuperuser' - please note that if Python 3 is your default version 'python3' is to be replaced with 'python'.
+Once the superuser has been established append '/admin' to the landing url to access this panel.
+### Create your journalists
+From within the access panel create a group named 'journalists'.  Add to this group the permission to upload articles.  Add the required registered users to this group (note that
+for this step to be completed there must be users in existance).
+### Select your platform & create a database
+Once you have selected the platform which you wish to run this project on add the database you wish to deploy.  As previously mentioned this app is calibrated for Heroku deployment
+& uses the Progress add-on database to store data.  Whatever database you wish to use the database url (located on line 81 of the settings.py file) must be updated.
+Should you wish to maintain use of Heroku & Postgres simply set up a Heroku app & add a Postgres database to the app within the resources section.  Alternatively Postgres can
+be added to the app using the below command;
+'heroku addons:create heroku-postgresql:hobby-dev' - please note that hobby-dev has limited storage capacity.  Please consult the Postgres documentation (https://www.postgresql.org/docs/) 
+for further information.
+### Set up static & media file hosting
+In addition to Postgres we require a storage facility for static files.  Within a test environment files can be hosted locally however for production a more robust database is
+required.  We recommend using AWS Cloud based services S3 & IAM to create buckets to store static data.  To achieve this you must have an AWS account (note an AWS Educate
+account with not suffice).  Create a bucket within S3 & a policy allowing for public access using IAM.  Attach this policy to the S3 bucket.
+For more information here please consult the AWS docs (https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingBucket.html).
+
+Once this has been completed amend the configuration settings beginning at line 130 of the settings.py file & the custom_storages.py file.
+Media files & static files are located in separate folders within the bucket.  In order to update the static files run the below command;
+'python3 manage.py collectstatic'
+### Setting up Stripe
+TBC
+### Setting & configuring the environment
+For testing an 'env.py' file is recommended which contains all required configuration variables (note that this file must import os).  To switch to another environment comment
+out 'import env' within the settings file & set your variables elsewhere (current variables for deployment are set on Heroku in the settings tab).
+The required environment variables which are to be set are listed below;
+SECRET_KEY
+STRIPE_PUBLISHABLE - see the Stripe heading above
+STRIPE_SECRET - as above
+DISABLE_COLLECTSTATIC - to be set to '1'
+EMAIL_ADDRESS - must be a gmail account
+EMAIL_PASSWORD
+AWS_SECRET_KEY_ID - obtained from within the .csv file during S3/IAM setup
+AWS_SECRET_ACCESS_KEY - as above
+
+
+### Run the application
+In order to run the application the below command (we recommend adding an alias to your .bashrc file to create a shortcut for this command);
+'python3 manage.py runserver $IP:$C9_PORT'
+
+## Credits
+### Content
+The content of this application (the articles) were taken for a number of sources listed below;
+
+https://www.bbc.com/news
+https://www.inverse.com
+https://www.vice.com
+https://www.businessinsider.com
+
+### Media
+The media for this application (article photos) were taken from the accompanying photos from the above listed sites or from Google Image searches.
+
+## Acknowledgements
+The Code Institute community on Slack, my project mentor Aaron Sinnott, & the online tutor support who were of great assistance. 
+
+Stack Overflow was of great use & many contributors had answered questions similar to those I held at separate points throughout the project.
 
 
 
