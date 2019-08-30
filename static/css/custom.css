@@ -92,7 +92,7 @@ form {
     float:right;
 }
 
-#div_id_article_key, #div_id_comment_author {
+#div_id_article_key, #div_id_comment_author, #div_id_author {
     display:none!important;
 }
 
