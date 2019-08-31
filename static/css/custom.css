@@ -51,8 +51,14 @@
 
 
 footer {
-    padding-top: 60px;
     text-align: center;
+    background-color:#c6c8ca;
+    color:#fff;
+}
+.footer-para {
+    margin-bottom: 0px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 /* AUTHENTICATION STYLING */
@@ -108,6 +114,18 @@ form {
     float:right;
 }
 
+/* DASHBOARD STYLING */
+.dashboard-div {
+    background-color:#c6c8ca;
+    color:#fff;
+    align-content:center;
+    text-align: center;
+}
+.align-center {
+    align-content:center;
+    text-align: center;
+}
+
 /* MEDIA QUERIES */
 /* hide/reveal article summary based on screen size */
 .article-summary {
@@ -128,4 +146,8 @@ width:50%;
 
 body {
     max-width:100vw!important;
+}
+
+.main-content{
+    min-height: 95vh;
 }
