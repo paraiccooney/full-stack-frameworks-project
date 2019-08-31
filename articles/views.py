@@ -5,6 +5,8 @@ from .forms import CommentForm, ArticleForm
 from django.conf import settings
 from django.contrib.auth.models import User, Group
 from django import template
+from datetime import datetime, timedelta
+from django.db.models import Count
 
 
 # Create your views here.
@@ -84,11 +86,52 @@ def write(request, pk=None):
             
         
         else:
-            new_article = ArticleForm()
+            new_article = ArticleForm(initial={'author': user})
             return render(request, "write.html", {"journalist": journalist, "new_article": new_article})
         
     else:
         return(redirect(reverse('index')))
         
         
-     
+# JOURNALIST DASHBOARD
+def myDashboard(request):
+    
+    # check to see if user is a journalist
+    user = request.user
+    if user.groups.filter(name='journalists').exists():
+        journalist= True
+    else:
+        journalist= False
+    
+    
+
+
+    pastWeek = datetime.today() - timedelta(days=7)
+    articles = Article.objects.filter(author=user).order_by('-published_date')
+    articleCount = articles.count()
+    viewCount = articles.annotate(count=Count('views')).count()
+    media_path = settings.MEDIAFILES_LOCATION
+    
+    return render(request, "dashboard.html", {"articles": articles, "media_path": media_path, "journalist": journalist, 
+    "articleCount": articleCount, "viewcount": viewCount, 'user':user})
+    
+
+# EDIT ARTICLE
+def editArticle(request, pk=None):
+    
+    # check to see if user is a journalist
+    user = request.user
+    if user.groups.filter(name='journalists').exists():
+        journalist= True
+    else:
+        journalist= False
+    
+    article = get_object_or_404(Article, pk=pk) if pk else None
+    if request.method == "POST":
+        form = ArticleForm(request.POST, request.FILES, instance=article)
+        if form.is_valid():
+            article = form.save()
+            return redirect(myDashboard)
+    else:
+        form = ArticleForm(instance=article)
+    return render(request, 'editarticle.html', {'edit_form': form, "journalist": journalist})

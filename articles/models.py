@@ -1,12 +1,13 @@
 from django.db import models
 from django.utils import timezone
 
+
 # Create your models here.
 
 # Article model
 class Article(models.Model):
     headline = models.CharField(max_length=254, default='')
-    author = models.CharField(max_length=50, default='')
+    author = models.CharField(max_length=50)
     content = models.TextField()
     # auto_now_add=True will add the current data & time upon upload
     created_date = models.DateTimeField(auto_now_add=True)
