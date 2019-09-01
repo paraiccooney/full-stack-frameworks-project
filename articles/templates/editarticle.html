@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load bootstrap_tags %}
+{% block content %}
+<div class="container">
+<br>
+<div class="row">
+<p>This is the edit page</p>
+                   <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ edit_form | as_bootstrap }}
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    </form>
+                </div>
+</div>
+
+{% endblock %}

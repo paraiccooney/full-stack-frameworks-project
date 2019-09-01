@@ -2,7 +2,42 @@
 
 {% block content %}
 
-<!-- if there are articles (search results may not return any) -->
+<!-- Metrics dashboard -->
+<div class="container-fluid">
+<div class=" row dashboard-div">
+    <div class="col-12 align-center">
+        <br>
+        <p class="align-center">Welcome back {{ user }}.  Thanks for being a contributor & making our site the great place it is.</p>
+    </div>
+</div>
+<div class=" row dashboard-div">
+   <div class="col-4 align-center">
+       <p class="align-center">Total Articles: {{ articleCount }}</p>
+   </div>
+   <div class="col-4 align-center">
+       <p class="align-center">Total Views: {{ viewcount }}</p>
+   </div>
+   <div class="col-4">
+       <p class="align-center">Comment Count: {{ comments }}
+       </p>
+   </div>
+</div>
+<div class=" row dashboard-div">
+   <div class="col-4 align-center">
+       <p class="align-center">This Weeks Articles: {{ twArticleCount }}</p>
+   </div>
+   <div class="col-4 align-center">
+       <p class="align-center">This Weeks Views: {{ twViewcount }}</p>
+   </div>
+   <div class="col-4">
+       <p class="align-center">This Weeks Comment Count: {{ twComments }}
+       </p>
+   </div>
+</div>
+</div>
+
+
+<!-- If there are articles (search results may not return any) -->
 {% if  articles %}
 {% for article in articles %}
 <div class="row article-row">
@@ -31,7 +66,10 @@
     </div>
     <div class="article-summary col-6">
         <p>{{ article.content|truncatewords:40 }}
-        <a href="{% url 'full_article' article.id %}"><button type="button" class="btn btn-outline-secondary">More</button></a></p>
+        <a href="{% url 'full_article' article.id %}"><button type="button" class="btn btn-outline-secondary">More</button></a>
+        <a href="{% url 'editArticle' article.id %}"><button type="button" class="btn btn-outline-secondary">Edit</button></a>
+        </p>
+        
     </div>
     
 </div>
@@ -39,12 +77,9 @@
 
 {% endfor %}
 
-<!-- if there are no search results -->
 {% else %}
 <div class="no-results-row container">
     <h5>No results</h5>
 </div>
 {% endif %}
-
-
 {% endblock %}

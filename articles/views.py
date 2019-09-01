@@ -103,17 +103,76 @@ def myDashboard(request):
     else:
         journalist= False
     
-    
-
-
-    pastWeek = datetime.today() - timedelta(days=7)
-    articles = Article.objects.filter(author=user).order_by('-published_date')
-    articleCount = articles.count()
-    viewCount = articles.annotate(count=Count('views')).count()
     media_path = settings.MEDIAFILES_LOCATION
     
+    pastWeek = datetime.today() - timedelta(days=7)
+    articles = Article.objects.filter(author=user).order_by('-published_date')
+    # this weeks articles
+    last_week = published_date=datetime.now()-timedelta(days=7)
+    twArticles = Article.objects.filter(author=user, published_date__gte=last_week).order_by('-published_date')
+    
+    # METRIC CALCULATIONS
+    # THIS WEEK
+    # calculating article count
+    articleCount = articles.count()
+    
+    # calculating viewcount
+    viewCount = 0
+    for item in articles:
+        viewCount += item.views
+    
+    # calculating comment count
+    comments = Comment.objects.all()
+    article_keys = []
+    commentCount = 0
+    
+    for item in articles:
+        article_keys.append(item.pk)
+    
+    author_article_keys = str(article_keys)
+    
+    commentArray = []
+    
+    for key in article_keys:
+        
+        for item in comments:
+            string_key = str(key)
+            if string_key in item.article_key:
+                commentArray.append(item.article_key)
+                commentCount += 1
+    
+    # THIS WEEK
+    # calculating article count
+    twArticleCount = twArticles.count()
+    
+    # calculating viewcount
+    twViewCount = 0
+    for item in twArticles:
+        twViewCount += item.views
+    
+    # calculating comment count
+    comments = Comment.objects.all()
+    twArticle_keys = []
+    twCommentCount = 0
+    
+    for item in twArticles:
+        twArticle_keys.append(item.pk)
+    
+    author_article_keys = str(article_keys)
+    
+    twCommentArray = []
+    
+    for key in twArticle_keys:
+        
+        for item in comments:
+            string_key = str(key)
+            if string_key in item.article_key:
+                twCommentArray.append(item.article_key)
+                twCommentCount += 1
+    
     return render(request, "dashboard.html", {"articles": articles, "media_path": media_path, "journalist": journalist, 
-    "articleCount": articleCount, "viewcount": viewCount, 'user':user})
+    "articleCount": articleCount, "viewcount": viewCount, 'user':user, 'comments': commentCount, 
+    "twArticleCount": twArticleCount, "twViewcount": twViewCount, 'twComments': twCommentCount})
     
 
 # EDIT ARTICLE
