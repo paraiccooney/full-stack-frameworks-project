@@ -55,7 +55,8 @@ CSS.  The max height of the article divs was also extended to allow for full con
 12. S3/IAM (AWS Buckets)
 
 ## Features
-**Feature 1 - Registration & Authentication**
+- Feature 1 - Registration & Authentication
+
 The application makes use of Djangos build in authentication functionality.  As can be seen within the Navbar upon entering the site the options to register of log-in are provided.
 Users are also prompted to sign in should they wish to comment or donate.  Authentication is used to determine what is rendered within the HTML & therefore is used to established
 what the user can interact with.
