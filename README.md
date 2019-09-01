@@ -114,6 +114,12 @@ results.  As a result I would implement pagination using Bootstrap while keeping
 At present articles are displayed based on their published date.  As the database grows I believe it would be beneficial to add functionality to allow users to view articles
 based on different metrics such as 'most-commented' or 'most-viewed' articles of the past day or week.
 
+- Sub navbar for categories
+
+Currently the application offers search functionality however no categories are present.  It would be beneficial to include another navbar below the current navbar which returns
+articles related to varying topics (Tech, Science, Sport, Weather, Europe, Asia, etc).  This could be achieved through targetting the tags journalists currently attached to their
+articles.  Alternatively a categories checkbox input could be included on the 'Write' page.
+
 ## Data Structure
 The back-end of this application is built using Postgres (a resource which can be added to Heroku where this app is deployed).  The app uses a relational database type (the comment
 section references it's secondary key against the articles primary key).
